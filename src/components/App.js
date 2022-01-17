@@ -1,4 +1,12 @@
 import React from 'react';
+import { ColorModeSwitcher } from '../ColorModeSwitcher';
+import avatar from './images/av_my.jpg';
+import projects from '../data/projects';
+import contacts from '../data/contacts';
+import skills from '../data/skills';
+import Portfolio from './Portfolio';
+import Contact from './Contact';
+import Skill from './Skill';
 import {
   ChakraProvider,
   Box,
@@ -14,23 +22,10 @@ import {
   Container,
   Flex,
   UnorderedList,
-  Icon,
-  Tooltip,
 } from '@chakra-ui/react';
-import { EmailIcon } from '@chakra-ui/icons';
-import { MdSettings } from 'react-icons/md';
-import { ColorModeSwitcher } from '../ColorModeSwitcher';
-import avatar from './images/av_my.jpg';
-import { GoRuby } from 'react-icons/go';
-import {
-  SiRails,
-  SiJavascript,
-  SiReact,
-  SiHtml5,
-  SiGithub,
-} from 'react-icons/si';
-import { IoMdGlobe } from 'react-icons/io';
-import { FaTelegram } from 'react-icons/fa';
+
+import { SiGithub } from 'react-icons/si';
+
 function App() {
   return (
     <ChakraProvider theme={theme}>
@@ -42,7 +37,6 @@ function App() {
         </Link>
         <ColorModeSwitcher border="1px" borderColor="gray.200" />
       </Flex>
-
       <Container maxW="container.md" mt="6" mb="20">
         <HStack>
           <Avatar size="2xl" name="Евгений Кузовлев" src={avatar} />
@@ -67,57 +61,18 @@ function App() {
         <Heading textAlign="left" mt="10" color="gray.600" mb="4">
           Навыки
         </Heading>
-        <HStack my="3">
-          <Icon as={GoRuby} color="#820C02" boxSize="40px" mr="4" />
-          <Text fontSize="xl" fontWeight="bold">
-            Ruby
-          </Text>{' '}
-          <Text>Понимание принципов ООП, Code style, Gems</Text>
-        </HStack>
 
-        <HStack my="3">
-          <Icon as={SiRails} color="#CC0000" boxSize="40px" mr="4" />
-          <Text fontSize="xl" fontWeight="bold">
-            Ruby on Rails
-          </Text>{' '}
-          <Text>MVC, REST, CRUD, API, I18n, RSpec, Postgres</Text>
-        </HStack>
-
-        <HStack my="3">
-          <Icon as={SiJavascript} color="#F0DB4F" boxSize="30px" mr="6" />
-
-          <Text fontSize="xl" fontWeight="bold">
-            Java Script
-          </Text>
-          <Text>ES6, DOM API, npm, модули, асинхронный JS</Text>
-        </HStack>
-
-        <HStack my="2">
-          <Icon as={SiReact} color="#61DBFB" boxSize="40px" mr="4" />
-
-          <Text fontSize="xl" fontWeight="bold">
-            React
-          </Text>
-          <Text>Create React App, React Router, хуки</Text>
-        </HStack>
-
-        <HStack my="2">
-          <Icon as={SiHtml5} color="#E34C26" boxSize="35px" mr="5" />
-
-          <Text fontSize="xl" fontWeight="bold">
-            HTML, CSS
-          </Text>
-          <Text>Flex, Grid, Bootstrap</Text>
-        </HStack>
-
-        <HStack my="2">
-          <Icon as={MdSettings} color="green.500" boxSize="40px" mr="4" />
-
-          <Text fontSize="xl" fontWeight="bold">
-            Инструменты
-          </Text>
-          <Text>Git, RubyMine, IRB, PRY, VSCode</Text>
-        </HStack>
+        {skills.map(item => {
+          return (
+            <Skill
+              id={item.id}
+              title={item.title}
+              color={item.color}
+              iconSize={item.icon_size}
+              description={item.description}
+            />
+          );
+        })}
 
         <Heading textAlign="left" mt="10" mb="4" color="gray.600">
           Образование
@@ -138,118 +93,34 @@ function App() {
         <Heading textAlign="left" mt="10" mb="4" color="gray.600">
           Проекты
         </Heading>
-        <Flex direction="row" alignItems="center">
-          <Link href="https://github.com/kuz-en/bbq" isExternal mr="2">
-            <Tooltip
-              label="Учебное приложение, в котором пользователи могут создать свое мероприятие и пригласить на него друзей. Можно загружать фотографии, обозначать на карте, комментировать и подписываться"
-              placement="top-start"
-              hasArrow
-              arrowSize={15}
-            >
-              BBQ (devise, pundit, carrierwave)
-            </Tooltip>
-          </Link>
-          <SiGithub ml="4" />
-        </Flex>
-        <Flex direction="row" alignItems="center">
-          <Link href="https://github.com/kuz-en/millionare" isExternal mr="2">
-            <Tooltip
-              label="Учебное приложение, по мотивам игры 'Кто хочет стать миллионером'. Много-много тестов."
-              placement="top-start"
-              hasArrow
-              arrowSize={15}
-            >
-              Millionare (RSpec)
-            </Tooltip>
-          </Link>
-          <SiGithub ml="4" />
-        </Flex>
-        <Flex direction="row" alignItems="center">
-          <Link
-            href="https://github.com/kuz-en/market_place_api"
-            isExternal
-            mr="2"
-          >
-            <Tooltip
-              label="API на основе Rails, JWT, jsonapi-serializer, kaminari, bullet"
-              placement="top-start"
-              hasArrow
-              arrowSize={15}
-            >
-              API (по мотивам API on Rails 6, A.Rousseau)
-            </Tooltip>
-          </Link>
-          <SiGithub ml="4" />
-        </Flex>
-        <Flex direction="row" alignItems="center">
-          <Link href="https://ip-find.vercel.app/" isExternal mr="2">
-            <Tooltip
-              label="Учебное приложение которое определяет местоположение по ip, построено по модульному принципу, от себя добавил автоматический поиск местоположения пользователя, в том числе с использованием Geo API (нужно разрешить определять местоположение вашему браузеру"
-              placement="top-start"
-              hasArrow
-              arrowSize={15}
-            >
-              IP-find (JS ES6, API, GEO)
-            </Tooltip>
-          </Link>
-          <IoMdGlobe ml="4" />
-        </Flex>
-        <Flex direction="row" alignItems="center">
-          <Link href="https://flag-app.vercel.app/" isExternal mr="2">
-            <Tooltip
-              label="Простое приложение, использует API, показывает флаги стран в соответствии с поисковым запросом"
-              placement="top-start"
-              hasArrow
-              arrowSize={15}
-            >
-              Flag-app (React)
-            </Tooltip>
-          </Link>
-          <IoMdGlobe ml="4" />
-        </Flex>
-        <Flex direction="row" alignItems="center">
-          <Link href="https://print-labels.vercel.app/" isExternal mr="2">
-            <Tooltip
-              label="Приложение для печати стандартных этикеток для принтеров Zebra, используется React, Zebra Programming Languagee, Skeleton CSS"
-              placement="top-start"
-              hasArrow
-              arrowSize={15}
-            >
-              Zebra print (React, ZPL)
-            </Tooltip>
-          </Link>
-          <IoMdGlobe ml="4" />
-        </Flex>
-        <Flex direction="row" alignItems="center">
-          <Link href="https://tap.pora-v-roddom.ru/" isExternal mr="2">
-            <Tooltip
-              label="Небольшая страничка для магазина, аналог TapLink для Instagram, хостится как статический сайт на Яндекс облаке"
-              placement="top-start"
-              hasArrow
-              arrowSize={15}
-            >
-              Tap Pora-v-roddom.ru (React, Yandex Cloud Object Storage)
-            </Tooltip>
-          </Link>
-          <IoMdGlobe ml="4" />
-        </Flex>
+
+        {projects.map(project => {
+          return (
+            <Portfolio
+              key={project.id}
+              title={project.title}
+              label={project.label}
+              link={project.link}
+              type={project.type}
+            />
+          );
+        })}
 
         <Heading textAlign="left" mt="10" mb="4" color="gray.600">
           Связаться со мной
         </Heading>
 
-        <Flex direction="row" alignItems="center">
-          <FaTelegram color="#229ED9" />
-          <Link href="https://t.me/kuzovlev" isExternal ml="2">
-            Telegram (@kuzovlev)
-          </Link>
-        </Flex>
-        <Flex direction="row" alignItems="center">
-          <EmailIcon color="gray.600" />
-          <Link href="mailto:bio19@yandex.ru" isExternal ml="2">
-            E-mail (bio19@yandex.ru)
-          </Link>
-        </Flex>
+        {contacts.map(contact => {
+          return (
+            <Contact
+              key={contact.id}
+              title={contact.title}
+              link={contact.link}
+              color={contact.color}
+              icon={contact.icon}
+            />
+          );
+        })}
       </Container>
     </ChakraProvider>
   );
