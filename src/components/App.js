@@ -1,4 +1,5 @@
 import React from 'react';
+import { extendTheme } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import avatar from './images/av_my.jpg';
 import projects from '../data/projects';
@@ -14,7 +15,6 @@ import {
   Text,
   Link,
   VStack,
-  theme,
   HStack,
   Heading,
   Avatar,
@@ -25,6 +25,13 @@ import {
 } from '@chakra-ui/react';
 
 import { SiGithub } from 'react-icons/si';
+
+const config = {
+  initialColorMode: 'light',
+  useSystemColorMode: true,
+};
+
+const theme = extendTheme({ config });
 
 function App() {
   return (
